@@ -1,0 +1,10 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollable {
+  overflow-y: scroll;
+}
+
+

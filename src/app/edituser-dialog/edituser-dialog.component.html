@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>Change password</h2>
+<mat-dialog-content>
+	<form [formGroup]="changePasswordForm" (ngSubmit)="onSubmit()" >
+		<div class="Form-container">
+			<mat-form-field>
+		    	<input matInput placeholder="Enter a password" type="password" formControlName="password">
+		    	<mat-icon matSuffix>vpn_key</mat-icon>
+		    	<mat-error *ngFor="let validation of validationMessages.password">
+		    	    <mat-error class="error-message" *ngIf="changePasswordForm.get('password').hasError(validation.type) && (changePasswordForm.get('password').dirty || changePasswordForm.get('password').touched)">{{validation.message}}</mat-error>
+		    	</mat-error>
+			</mat-form-field>
+			<mat-form-field>
+		    	<input matInput placeholder="Confirm password" type="password" formControlName="confirmPassword">
+		    	<mat-icon matSuffix>vpn_key</mat-icon>
+		    	<mat-error class="error-message" *ngIf="changePasswordForm.controls.confirmPassword.invalid">Password missmatch</mat-error>
+			</mat-form-field>
+		</div>
+		<button mat-raised-button color="accent"  type="reset" (click)="close()" style="margin-right: 20px;">cancel</button>
+		<button mat-raised-button color="primary" type="submit" [disabled]="!changePasswordForm.valid">Submit</button>
+	</form>
+</mat-dialog-content>
+
+
+

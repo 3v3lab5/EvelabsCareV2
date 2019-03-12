@@ -1,0 +1,24 @@
+<div fxLayout="row" fxLayoutAlign="center center" style="height: 100%;width: 100%">
+    <mat-card fxFlex="40" fxFlex.xs="80">
+        <mat-card-header>
+            <mat-card-title>Login</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="loginForm-container">
+                    <mat-form-field>
+                        <input matInput placeholder="Enter your registered email"  type="text" formControlName="userName">
+                        <mat-icon matSuffix>email</mat-icon>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Enter password" type="password" formControlName="password">
+                        <mat-icon matSuffix>vpn_key</mat-icon>
+                    </mat-form-field>
+                    <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">Login</button>
+                </form>
+        </mat-card-content>
+        <mat-card-actions fxLayout="row" fxLayoutAlign="center center" style="height: 100%;width: 100%">
+            <button mat-button color="accent" routerLink="/forgotpassword">Forgot Password</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
+

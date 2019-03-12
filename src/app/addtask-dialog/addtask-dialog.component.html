@@ -1,0 +1,64 @@
+<h2 mat-dialog-title>Add task</h2>
+<mat-dialog-content>
+		<form [formGroup]="addTaskForm" (ngSubmit)="onSubmit(addTaskForm,formDirective)"  #formDirective="ngForm">
+	 		<div class="form-container" fxLayout="column">
+	 			<div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutGap.xs="0px">
+	 					<mat-form-field fxFlex="100">
+	 					  	<mat-select placeholder="Time" formControlName="time">
+	 					    	<mat-option *ngFor="let Time of Times" [value]="Time.value">
+	 					      			{{Time.viewValue}}
+	 					    	</mat-option>
+	 					  	</mat-select>
+	 					  	<mat-icon matSuffix>alarm</mat-icon>
+	 					  	<mat-error *ngFor="let validation of validationMessages.bedId">
+	 					      	<mat-error class="error-message" *ngIf="addTaskForm.get('time').hasError(validation.type) && (addTaskForm.get('time').dirty || addTaskForm.get('time').touched)">{{validation.message}}</mat-error>
+	 					  	</mat-error>
+	 					</mat-form-field>
+	 			</div>
+	 			<div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutGap.xs="0px">
+	 				<mat-form-field fxFlex="100">
+	 					<mat-select placeholder="Bed" formControlName="bedId">
+	 					    <mat-option *ngFor="let bed of beds" [value]="bed._id">
+	 					      			{{bed.bedName}}
+	 					    </mat-option>
+	 					</mat-select>
+	 					<mat-icon matSuffix>hotel</mat-icon>
+	 					<mat-error *ngFor="let validation of validationMessages.bedId">
+	 					    <mat-error class="error-message" *ngIf="addTaskForm.get('bedId').hasError(validation.type) && (addTaskForm.get('bedId').dirty || addTaskForm.get('bedId').touched)">{{validation.message}}</mat-error>
+	 					</mat-error>
+	 				</mat-form-field>
+	 			</div>
+	 			<div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutGap.xs="0px">
+	 				<mat-form-field fxFlex="50">
+	 				    <input matInput placeholder="Enter Medicine name" type="text" formControlName="medicineName">
+	 				    <mat-icon matSuffix>opacity</mat-icon>
+	 				    <mat-error *ngFor="let validation of validationMessages.medicineName">
+	 				    	<mat-error class="error-message" *ngIf="addTaskForm.get('medicineName').hasError(validation.type) && (addTaskForm.get('medicineName').dirty || addTaskForm.get('medicineName').touched)">{{validation.message}}</mat-error>
+	 				    </mat-error>
+	 				 </mat-form-field>
+	 				 <mat-form-field fxFlex="50">
+	 				     <input matInput placeholder="Enter medicine volume" type="text" formControlName="medicineVolume">
+	 				     <mat-icon matSuffix>local_drink</mat-icon>
+	 				     <mat-error *ngFor="let validation of validationMessages.medicineVolume">
+	 				     	<mat-error class="error-message" *ngIf="addTaskForm.get('medicineVolume').hasError(validation.type) && (addTaskForm.get('medicineVolume').dirty || addTaskForm.get('medicineVolume').touched)">{{validation.message}}</mat-error>
+	 				     </mat-error>
+	 				  </mat-form-field>
+				</div>
+				<div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutGap.xs="0px">
+				 	<mat-form-field fxFlex="50">
+				 		<input matInput placeholder="Enter Time for infusion in Hrs" type="text" formControlName="timeForInfusion">
+				 		<mat-icon matSuffix>alarm</mat-icon>
+				 	</mat-form-field>
+				 	<mat-form-field fxFlex="50">
+				 		<input matInput placeholder="Enter medicine rate" type="text" formControlName="medicineRate">
+				 		<mat-icon matSuffix>trending_up</mat-icon>
+				 		<mat-error *ngFor="let validation of validationMessages.medicineRate">
+				 			<mat-error class="error-message" *ngIf="addTaskForm.get('medicineRate').hasError(validation.type) && (addTaskForm.get('medicineRate').dirty || addTaskForm.get('medicineRate').touched)">{{validation.message}}</mat-error>
+				 		</mat-error>
+				 	</mat-form-field>
+				</div>
+	 		</div>
+	 		<button mat-raised-button color="accent"  type="reset" (click)="addTaskForm.reset()" style="margin-right: 20px;">cancel</button>
+	 		<button mat-raised-button color="primary" type="submit" [disabled]="!addTaskForm.valid">Submit</button>
+	 	</form>
+</mat-dialog-content>

@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Edit Ivset</h2>
+<mat-dialog-content>
+	<form [formGroup]="editIvsetForm" (ngSubmit)="onSubmit()" >
+		<div class="form-container">
+			<mat-form-field>
+			    <input matInput placeholder="Enter ivset model" type="text" formControlName="ivsetModel">
+			    	<mat-icon matSuffix>info</mat-icon>
+			    	<mat-error *ngFor="let validation of validationMessages.ivsetModel">
+			    	    <mat-error class="error-message" *ngIf="editIvsetForm.get('ivsetModel').hasError(validation.type) && (editIvsetForm.get('ivsetModel').dirty || editIvsetForm.get('ivsetModel').touched)">{{validation.message}}</mat-error>
+			    	</mat-error>
+			  	</mat-form-field>
+			<mat-form-field>
+		    	<input matInput placeholder="Enter ivset dpf" type="text" formControlName="ivsetDpf">
+		    	<mat-icon matSuffix>opacity</mat-icon>
+		    	<mat-error *ngFor="let validation of validationMessages.ivsetDpf">
+		    	    <mat-error class="error-message" *ngIf="editIvsetForm.get('ivsetDpf').hasError(validation.type) && (editIvsetForm.get('ivsetDpf').dirty || editIvsetForm.get('ivsetDpf').touched)">{{validation.message}}</mat-error>
+		    	</mat-error>
+		  	</mat-form-field>
+		</div>
+		<button mat-raised-button color="accent"  type="reset" [mat-dialog-close]="true" style="margin-right: 20px;">cancel</button>
+		<button mat-raised-button color="primary" type="submit" [disabled]="!editIvsetForm.valid">Submit</button>
+	</form>
+</mat-dialog-content>

@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Edit Bed</h2>
+<mat-dialog-content>
+	<form [formGroup]="editBedForm" (ngSubmit)="onSubmit()" >
+		<div class="form-container">
+			<mat-form-field>
+		    	<input matInput placeholder="Enter bed name" type="text" formControlName="bedName">
+		    	<mat-icon matSuffix>hotel</mat-icon>
+		    	<mat-error *ngFor="let validation of validationMessages.bedName">
+		    	    <mat-error class="error-message" *ngIf="editBedForm.get('bedName').hasError(validation.type) && (editBedForm.get('bedName').dirty || editBedForm.get('bedName').touched)">{{validation.message}}</mat-error>
+		    	</mat-error>
+		  	</mat-form-field>
+		</div>
+		<button mat-raised-button color="accent"  type="reset" [mat-dialog-close]="true" style="margin-right: 20px;">cancel</button>
+		<button mat-raised-button color="primary" type="submit" [disabled]="!editBedForm.valid">Submit</button>
+	</form>
+</mat-dialog-content>

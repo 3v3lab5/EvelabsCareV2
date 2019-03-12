@@ -1,0 +1,13 @@
+
+<h2 mat-dialog-title>Remove User</h2>
+
+<mat-dialog-content>
+
+	Are you sure you want to remove {{deleteUserData.userName}} ?
+ 
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button class="mat-raised-button mat-primary" color="primary" [mat-dialog-close]="true">Close</button>
+    <button class="mat-raised-button mat-accent"(click)="removeUser()">Remove</button>
+</mat-dialog-actions>

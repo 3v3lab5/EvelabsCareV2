@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Edit Station</h2>
+<mat-dialog-content>
+	<form [formGroup]="editStationForm" (ngSubmit)="onSubmit()" >
+		<div class="form-container">
+			<mat-form-field>
+		    	<input matInput placeholder="Enter station name" type="text" formControlName="stationName">
+		    	<mat-icon matSuffix>important_devices</mat-icon>
+		    	<mat-error *ngFor="let validation of validationMessages.stationName">
+		    	    <mat-error class="error-message" *ngIf="editStationForm.get('stationName').hasError(validation.type) && (editStationForm.get('stationName').dirty || editStationForm.get('stationName').touched)">{{validation.message}}</mat-error>
+		    	</mat-error>
+		  	</mat-form-field>
+		</div>
+		<button mat-raised-button color="accent"  type="reset" [mat-dialog-close]="true" style="margin-right: 20px;">cancel</button>
+		<button mat-raised-button color="primary" type="submit" [disabled]="!editStationForm.valid">Submit</button>
+	</form>
+</mat-dialog-content>

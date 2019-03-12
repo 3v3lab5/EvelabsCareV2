@@ -1,0 +1,28 @@
+<div fxLayout="row" fxLayoutAlign="center center" style="height: 100%;width: 100%">
+	<mat-card fxFlex="40" fxFlex.xs="80">
+			<mat-card-header>
+			  	<mat-card-title>Select Station</mat-card-title>
+			</mat-card-header>
+			<mat-card-content>
+					<form [formGroup]="selectStationForm" (ngSubmit)="onSubmit(selectStationForm,formDirective)"  #formDirective="ngForm">
+				 		<div class="form-container">
+				 			<mat-form-field>
+				 			  	<mat-select placeholder="Station" formControlName="stationId">
+				 			    	<mat-option *ngFor="let station of stations" [value]="station._id">
+				 			      		{{station.stationName}}
+				 			    	</mat-option>
+				 			  	</mat-select>
+				 			  	<mat-icon matSuffix>important_devices</mat-icon>
+				 			  	<mat-error *ngFor="let validation of validationMessages.stationId">
+				 			      	<mat-error class="error-message" *ngIf="selectStationForm.get('stationId').hasError(validation.type) && (selectStationForm.get('stationId').dirty || selectStationForm.get('stationId').touched)">{{validation.message}}</mat-error>
+				 			  	</mat-error>
+				 			</mat-form-field>
+				 		</div>
+				 		<div fxLayout="row">
+				 			<button fxFlex="50" mat-raised-button color="accent"  type="reset" (click)="selectStationForm.reset()" style="margin-right: 20px;">cancel</button>
+				 			<button fxFlex="50" mat-raised-button color="primary" type="submit" [disabled]="!selectStationForm.valid">Submit</button>
+				 		</div>
+				 	</form>
+			</mat-card-content>
+		</mat-card>
+</div>

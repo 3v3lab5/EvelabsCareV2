@@ -1,0 +1,74 @@
+<div fxLayout="column" style="width:100%;height: 100%;" fxLayoutGap="10px">
+	<div fxFlex="none" fxLayout="column" fxLayoutGap="10px">
+		<mat-accordion>
+		  <mat-expansion-panel>
+		    <mat-expansion-panel-header>
+		      <mat-panel-title>
+		        Personal Details
+		      </mat-panel-title>
+		      <mat-panel-description>
+		      	of {{history.patientName}}
+		      </mat-panel-description>
+		    </mat-expansion-panel-header>
+				<div fxLayout="column">
+					<div fxFlex="50" fxLayout="row">
+						<div fxFlex="33">Age : {{history.patientAge}}</div>
+						<div fxFlex="33">weight : {{history.patientWeight}} Kg</div>
+						<div fxFlex="33">Gender : {{history.patientGender}}</div>
+					</div>
+					<div fxFlex="50" fxLayout="row">
+						<div fxFlex="33">Status : {{history.patientStatus}}</div>
+						<div fxFlex="33">Admitted On : {{history.admittedOn | date:'fullDate'}}</div>
+						<div fxFlex="33">Discharged On : {{history.dischargedOn}}</div>
+					</div>	
+				</div>
+			
+		  </mat-expansion-panel>
+		</mat-accordion>
+	</div>
+
+
+
+	<div fxFlex="none" fxLayout="column" fxLayoutGap="10px">
+		<mat-accordion>
+		  <mat-expansion-panel *ngFor="let medication of history._medication">
+		    <mat-expansion-panel-header>
+		      <mat-panel-title>
+		        Infusion
+		      </mat-panel-title>
+		      <mat-panel-description>
+		        at {{medication._infusionhistory.infusionDate | date:'fullDate'}} on {{medication._infusionhistory.startingTime}}
+		      </mat-panel-description>
+		    </mat-expansion-panel-header>
+
+			<div fxLayout="column" fxLayoutGap="10px" style="width:100%;height: 100%;">
+				<div fxFlex="5" fxLayout="row">
+					<div fxFlex="20">Medicine : {{medication.medicineName}} </div>
+					<div fxFlex="20">Volume : {{medication.medicineVolume}} ml</div>
+					<div fxFlex="20">Rate : {{medication.medicineRate}} ml/hr</div>
+					<div fxFlex="20">Infused Volume : {{medication._infusionhistory.infusedVolume}} ml</div>
+					<div fxFlex="20">Ending Time : {{medication._infusionhistory.endingTime}} </div>
+				</div>
+				<div id="printArea">
+				    <table style="width:100%">
+				          <tr>
+				            <th>Status</th>
+				            <th>Time</th> 
+				          </tr>
+				          <tr *ngFor="let msg of medication._infusionhistory.message">
+				            <td >{{msg.status}}</td>
+				            <td>{{msg.time}}</td>
+				          </tr>
+				    </table>
+				</div>
+				
+			</div>
+
+		  </mat-expansion-panel>
+		</mat-accordion>
+	</div>
+	<div fxFlex="5">
+		<button mat-raised-button color="accent" style="margin-left: 10px;" [routerLink]="['/nurse/home']">Back</button>
+
+	</div>
+</div>

@@ -1,0 +1,9 @@
+
+
+.scrollable {
+  overflow-y: scroll;
+}
+
+.slick-list{
+  height: 100% !important;
+}

@@ -1,0 +1,60 @@
+<h2 mat-dialog-title>Edit Patient</h2>
+<mat-dialog-content>
+		<form [formGroup]="editPatientForm" (ngSubmit)="onSubmit()"  #formDirective="ngForm">
+	 		<div class="form-container" fxLayout="column">
+	 			<div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutGap.xs="0px">
+	 					<mat-form-field fxFlex="50">
+	 					    <input matInput placeholder="Enter patient name" type="text" formControlName="patientName">
+	 					    <mat-icon matSuffix>person</mat-icon>
+	 					    <mat-error *ngFor="let validation of validationMessages.patientName">
+	 					    	<mat-error class="error-message" *ngIf="editPatientForm.get('patientName').hasError(validation.type) && (editPatientForm.get('patientName').dirty || editPatientForm.get('patientName').touched)">{{validation.message}}</mat-error>
+	 					    </mat-error>
+	 					 </mat-form-field>
+	 					<mat-form-field fxFlex="50">
+	 					  	<mat-select placeholder="Bed" formControlName="bedId">
+	 					    	<mat-option *ngFor="let bed of beds" [value]="bed._id">
+	 					      			{{bed.bedName}}
+	 					    	</mat-option>
+	 					  	</mat-select>
+	 					  	<mat-icon matSuffix>hotel</mat-icon>
+	 					  	<mat-error *ngFor="let validation of validationMessages.bedId">
+	 					      	<mat-error class="error-message" *ngIf="editPatientForm.get('bedId').hasError(validation.type) && (editPatientForm.get('bedId').dirty || editPatientForm.get('bedId').touched)">{{validation.message}}</mat-error>
+	 					  	</mat-error>
+	 					</mat-form-field>
+	 			</div>
+	 			<div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutGap.xs="0px">
+	 				<mat-form-field fxFlex="50">
+	 				    <input matInput placeholder="Enter patient age" type="number" formControlName="patientAge">
+	 				    <mat-icon matSuffix>info</mat-icon>
+	 				</mat-form-field>
+	 				<mat-form-field fxFlex="50">
+	 				    <input matInput placeholder="Enter patient weight" type="number" formControlName="patientWeight">
+	 				    <mat-icon matSuffix>info</mat-icon>
+	 				</mat-form-field>
+	 			</div>
+	 			<div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutGap.xs="0px">
+	 				<mat-form-field fxFlex="50">
+	 				  	<mat-select placeholder="gender" formControlName="patientGender">
+	 				    	<mat-option *ngFor="let patientGender of patientGenders" [value]="patientGender.value">
+	 				      		{{patientGender.viewValue}}
+	 				    	</mat-option>
+	 				  	</mat-select>
+	 				  	<mat-icon matSuffix>account_box</mat-icon>
+	 				  	<mat-error *ngFor="let validation of validationMessages.patientGender">
+	 				      	<mat-error class="error-message" *ngIf="editPatientForm.get('patientGender').hasError(validation.type) && (editPatientForm.get('patientGender').dirty || editPatientForm.get('patientGender').touched)">{{validation.message}}</mat-error>
+	 				  	</mat-error>
+	 				</mat-form-field>
+	 				<mat-form-field fxFlex="50">
+	 				  	<mat-select placeholder="Doctor" formControlName="doctor">
+	 				    	<mat-option *ngFor="let doctor of doctors" [value]="doctor.userName">
+	 				      			{{doctor.userName}}
+	 				    	</mat-option>
+	 				  	</mat-select>
+	 				  	<mat-icon matSuffix>assignment_ind</mat-icon>
+	 				</mat-form-field>
+	 			</div>
+	 		</div>
+	 		<button mat-raised-button color="accent"  type="reset" (click)="editPatientForm.reset()" style="margin-right: 20px;">cancel</button>
+	 		<button mat-raised-button color="primary" type="submit" [disabled]="!editPatientForm.valid">Submit</button>
+	 	</form>
+</mat-dialog-content>

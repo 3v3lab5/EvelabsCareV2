@@ -1,0 +1,12 @@
+.loginForm-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-card {
+	width:600px;
+  max-width: 400px;
+  align-items: center;
+}
+
+

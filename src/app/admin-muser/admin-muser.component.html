@@ -1,0 +1,84 @@
+<div fxLayout="row" fxLayout.xs="column-reverse wrap" style="height: 100%;width: 100%; margin-top: 10px;" fxLayoutGap="10px" fxLayoutGap.xs="0px">
+	<div fxFlex="70" fxFlex.xs="40" class="scrollable">
+		<div fxLayout="column" fxLayoutGap="10px" >
+			<mat-card fxLayout="row" *ngFor="let user of users |filter:term">
+				<div fxFlex="50" fxFlex.xs="60">{{user.userName}} <br>{{user.permission}}</div>
+				<div fxFlex="25" fxHide.xs="true" fxHide.sm="true" style="color: blue" (click)="openEditDialog(user._id)" class="mat-button">Change Password</div>
+				<div fxFlex="20" fxHide.xs="false" fxHide.sm="false" fxHide.md="true" fxHide.lg="true" fxHide.xl="true" style="color: blue" (click)="openEditDialog(user._id)" class="mat-button">
+					<mat-icon>edit</mat-icon>
+				</div>
+				<div fxFlex="25" fxHide.xs="true" fxHide.sm="true" style="color: red" (click)="openDeleteDialog(user)" class="mat-button">Remove</div>
+				<div fxFlex="20" fxHide.xs="false" fxHide.sm="false" fxHide.md="true" fxHide.lg="true" fxHide.xl="true" style="color: red" (click)="openDeleteDialog(user)" class="mat-button">
+					<mat-icon>close</mat-icon>
+				</div>
+			</mat-card>
+		</div>
+	</div>
+	<div fxFlex="30" fxFlex.xs="60" fxLayout="column" fxLayoutGap="10px">
+		<div fxFlex="60" fxFlex.xs="100">
+			<mat-card>
+				<mat-card-header>
+				  	<mat-card-title>Create User Account</mat-card-title>
+				  	<mat-card-subtitle>Add a nurse/doctor account</mat-card-subtitle>
+				</mat-card-header>
+				<mat-card-content>
+					<form [formGroup]="createUserForm" (ngSubmit)="onSubmit(createUserForm,formDirective)"  #formDirective="ngForm">
+				 		<div class="form-container">
+				 			<mat-form-field>
+				 	    		<input matInput placeholder="Enter username" type="text" formControlName="userName">
+				 	    		<mat-icon matSuffix>person</mat-icon>
+				 	    		<mat-error *ngFor="let validation of validationMessages.userName">
+				 	    	    	<mat-error class="error-message" *ngIf="createUserForm.get('userName').hasError(validation.type) && (createUserForm.get('userName').dirty || createUserForm.get('userName').touched)">{{validation.message}}</mat-error>
+				 	    		</mat-error>
+				 	  		</mat-form-field>
+				 	  		<mat-form-field>
+				 	  	    	<input matInput placeholder="Enter a password" type="password" formControlName="password">
+				 	  	    	<mat-icon matSuffix>vpn_key</mat-icon>
+				 	  	    	<mat-error *ngFor="let validation of validationMessages.password">
+				 	  	    	    <mat-error class="error-message" *ngIf="createUserForm.get('password').hasError(validation.type) && (createUserForm.get('password').dirty || createUserForm.get('password').touched)">{{validation.message}}</mat-error>
+				 	  	    	</mat-error>
+				 	  		</mat-form-field>
+				 	  		<mat-form-field>
+				 	  	    	<input matInput placeholder="Confirm password" type="password" formControlName="confirmPassword">
+				 	  	    	<mat-icon matSuffix>vpn_key</mat-icon>
+				 	  	    	<mat-error class="error-message" *ngIf="createUserForm.controls.confirmPassword.invalid">Password missmatch</mat-error>
+				 	  		</mat-form-field>
+				 	  		<mat-form-field>
+				 	  	  		<mat-select placeholder="Account type" formControlName="accountType">
+				 	  	    		<mat-option *ngFor="let accountType of accountTypes" [value]="accountType.value">
+				 	  	      			{{accountType.viewValue}}
+				 	  	    		</mat-option>
+				 	  	  		</mat-select>
+				 	  	  		<mat-icon matSuffix>account_box</mat-icon>
+				 	  	  		<mat-error *ngFor="let validation of validationMessages.accountType">
+				 	  	      		<mat-error class="error-message" *ngIf="createUserForm.get('accountType').hasError(validation.type) && (createUserForm.get('accountType').dirty || createUserForm.get('accountType').touched)">{{validation.message}}</mat-error>
+				 	  	  		</mat-error>
+				 	  		</mat-form-field>
+				 		</div>
+				 		<button mat-raised-button color="accent"  type="reset" (click)="createUserForm.reset()" style="margin-right: 20px;">cancel</button>
+				 		<button mat-raised-button color="primary" type="submit" [disabled]="!createUserForm.valid">Submit</button>
+				 	</form>
+				</mat-card-content>
+			</mat-card>
+		</div>
+		<div fxFlex="40" fxFlex.xs="50"  fxHide.xs="true">
+			<mat-card>
+				<mat-card-header>
+				  	<mat-card-title>Accounts</mat-card-title>
+				  	<mat-card-subtitle>Filters</mat-card-subtitle>
+				</mat-card-header>
+				<mat-card-content class="form-container">
+					<mat-form-field appearance="outline">
+						<mat-icon matSuffix>search</mat-icon>
+						<input  matInput placeholder="search user" type="text" [(ngModel)]=term>
+					</mat-form-field>
+					<br>
+					
+				</mat-card-content>
+			</mat-card>
+			
+		</div>
+	</div>
+	
+</div>
+

@@ -1,0 +1,28 @@
+.toolbar-spacer {
+    flex: 1 1 auto;
+}
+.toolbar-active{
+	color:black;
+}
+.main-container {
+  width: 100%;
+  height: 94%;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  background: #eee;
+
+}
+
+
+.active-list-item {
+  color: #568B3E !important; /* Note: You could also use a custom theme */
+  background-color: inherit !important;
+}
+.mat-list-item{
+	background-color: inherit !important;
+
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}

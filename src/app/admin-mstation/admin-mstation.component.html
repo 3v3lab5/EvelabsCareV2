@@ -1,0 +1,61 @@
+<div fxLayout="row" fxLayout.xs="column-reverse wrap" style="height: 100%;width: 100%; margin-top: 10px;" fxLayoutGap="10px" fxLayoutGap.xs="0px">
+	<div fxFlex="70" fxFlex.xs="40" class="scrollable">
+		<div fxLayout="column" fxLayoutGap="10px" >
+			<mat-card fxLayout="row" *ngFor="let station of stations |filter:term">
+				<div fxFlex="50" fxFlex.xs="60">{{station.stationName}}</div>
+				<div fxFlex="25" fxHide.xs="true" fxHide.sm="true" style="color: blue" (click)="openEditDialog(station)" class="mat-button">Edit</div>
+				<div fxFlex="20" fxHide.xs="false" fxHide.sm="false" fxHide.md="true" fxHide.lg="true" fxHide.xl="true" style="color: blue" (click)="openEditDialog(station)" class="mat-button">
+					<mat-icon>edit</mat-icon>
+				</div>
+				<div fxFlex="25" fxHide.xs="true" fxHide.sm="true" style="color: red" (click)="openDeleteDialog(station)" class="mat-button">Remove</div>
+				<div fxFlex="20" fxHide.xs="false" fxHide.sm="false" fxHide.md="true" fxHide.lg="true" fxHide.xl="true" style="color: red" (click)="openDeleteDialog(station)" class="mat-button">
+					<mat-icon>close</mat-icon>
+				</div>
+			</mat-card>
+		</div>
+	</div>
+	<div fxFlex="30" fxFlex.xs="60" fxLayout="column" fxLayoutGap="10px">
+		<div fxFlex="60" fxFlex.xs="100">
+			<mat-card>
+				<mat-card-header>
+				  	<mat-card-title>Create Nursing Station</mat-card-title>
+				  	<mat-card-subtitle>Add a Nursing Station</mat-card-subtitle>
+				</mat-card-header>
+				<mat-card-content>
+						<form [formGroup]="createStationForm" (ngSubmit)="onSubmit(createStationForm,formDirective)"  #formDirective="ngForm">
+					 		<div class="form-container">
+					 			<mat-form-field>
+					 	    		<input matInput placeholder="Enter station name" type="text" formControlName="stationName">
+					 	    		<mat-icon matSuffix>important_devices</mat-icon>
+					 	    		<mat-error *ngFor="let validation of validationMessages.stationName">
+					 	    	    	<mat-error class="error-message" *ngIf="createStationForm.get('stationName').hasError(validation.type) && (createStationForm.get('stationName').dirty || createStationForm.get('stationName').touched)">{{validation.message}}</mat-error>
+					 	    		</mat-error>
+					 	  		</mat-form-field>
+					 		</div>
+					 		<button mat-raised-button color="accent"  type="reset" (click)="createStationForm.reset()" style="margin-right: 20px;">cancel</button>
+					 		<button mat-raised-button color="primary" type="submit" [disabled]="!createStationForm.valid">Submit</button>
+					 	</form>
+				</mat-card-content>
+			</mat-card>
+		</div>
+		<div fxFlex="40" fxFlex.xs="50"  fxHide.xs="true">
+			<mat-card>
+				<mat-card-header>
+				  	<mat-card-title>Nursing Station</mat-card-title>
+				  	<mat-card-subtitle>Filters</mat-card-subtitle>
+				</mat-card-header>
+				<mat-card-content class="form-container">
+					<mat-form-field appearance="outline">
+						<mat-icon matSuffix>search</mat-icon>
+						<input  matInput placeholder="search station" type="text" [(ngModel)]="term">
+					</mat-form-field>
+					<br>
+					
+				</mat-card-content>
+			</mat-card>
+			
+		</div>
+	</div>
+	
+</div>
+
