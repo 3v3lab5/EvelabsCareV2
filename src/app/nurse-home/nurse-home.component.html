@@ -30,15 +30,15 @@
 			 			<div fxFlex="40">
 			 				<ngx-slick  class="carousel" #slickModal="slick-modal" [config]="slideConfig" style="height: 100%;width: 100%;">
 			 					<div ngxSlickItem class="slide" fxLayout="column">
-			 						<div fxFlex="90"  style="color:#757575;padding: 5px 0px 0px 20px;font-size: 50px;font-weight: 100;">{{task.infusedVolume}} / {{task._medication.medicineVolume}}<span style="font-size: 20px;">ml</span></div> 
+			 						<div fxFlex="90"  style="color:#757575;padding: 5px 0px 0px 20px;font-size: 40px;font-weight: 100;">{{task.infusedVolume}} / {{task._medication.medicineVolume}}<span style="font-size: 20px;">ml</span></div> 
 			 						<div fxFlex="10"  style="color:#757575;padding: 0px 0px 0px 25px;font-size: 14px;">Infused</div>
 			 					</div>
 			 					<div ngxSlickItem class="slide"  fxLayout="column">
-			 						<div fxFlex="90"  style="color:#757575;padding: 5px 0px 0px 20px;font-size: 50px;font-weight: 100;">{{task.timeRemaining /60 | number:'1.0-0'}} <span style="font-size: 20px;">Hrs</span> {{task.timeRemaining%60}}  <span style="font-size: 20px;">Mins</span></div>
+			 						<div fxFlex="90"  style="color:#757575;padding: 5px 0px 0px 20px;font-size: 40px;font-weight: 100;">{{task.timeRemaining /60 | number:'1.0-0'}} <span style="font-size: 20px;">Hrs</span> {{task.timeRemaining%60}}  <span style="font-size: 20px;">Mins</span></div>
 			 						<div fxFlex="10"  style="color:#757575;padding: 0px 0px 0px 25px;font-size: 14px;">Remaining</div>
 			 					</div>
 			 					<div ngxSlickItem class="slide" fxLayout="column">
-			 						<div fxFlex="90"  style="color:#757575;padding: 5px 0px 0px 20px;font-size: 50px;font-weight: 100;">{{task.rate}} / {{task._medication.medicineRate}}<span style="font-size: 20px;">ml/hr</span></div> 
+			 						<div fxFlex="90"  style="color:#757575;padding: 5px 0px 0px 20px;font-size: 40px;font-weight: 100;">{{task.rate}} / {{task._medication.medicineRate}}<span style="font-size: 20px;">ml/hr</span></div> 
 			 						<div fxFlex="10"  style="color:#757575;padding: 0px 0px 0px 25px;font-size: 14px;">Rate</div>
 			 					</div>
 			 				</ngx-slick>
