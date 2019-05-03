@@ -25,7 +25,9 @@ export class EditdripoDialogComponent implements OnInit {
   		this.editDripoId = data;
   		this.editDripoForm = this.fb.group({
   			stationId:[data.stationId,Validators.required],
-  			dripoId:[data.dripoId,Validators.required]
+  			dripoId:[data.dripoId,Validators.required],
+        altName:[data.altName,Validators.required]
+
   		}) 
   	}
 
@@ -35,7 +37,10 @@ export class EditdripoDialogComponent implements OnInit {
   		],
   		'dripoId':[
   			{type:'required',message:'dripo id is required'}
-  		]
+  		],
+      'altName':[
+        {type:'required',message:'Alternative name is required'}
+      ]
   	}
 
   	ngOnInit() {

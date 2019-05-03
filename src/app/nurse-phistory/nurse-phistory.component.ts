@@ -13,20 +13,16 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: ['./nurse-phistory.component.css']
 })
 export class NursePhistoryComponent implements OnInit {
-	history={patientName:'',patientAge:'',patientWeight:'',patientGender:'',patientStatus:'',
-    admittedOn:'',dischargedOn:'',_medication:''
-  };
+	histories=[];
   constructor(private route: ActivatedRoute,public snackbar: MatSnackBar,
   private router: Router,private nurse: NurseService) { }
 
   ngOnInit() {
-  	let id = this.route.snapshot.paramMap.get('id');
-  	this.nurse.readPatientHistory(id)
+  	this.nurse.readPatientHistory()
   	  .subscribe(
   	    res => {
   	        if(res.success){
-  	        	this.history = res.data;
-  	        	console.log(this.history);
+  	        	this.histories = res.data;
   	        }
   	        else{
   	        	this.snackbar.open(res.message, 'close')
@@ -37,6 +33,6 @@ export class NursePhistoryComponent implements OnInit {
   	    }
   	)
 
-  	}
+  	 }
 
 }

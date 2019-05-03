@@ -1,15 +1,15 @@
-<mat-toolbar color="#F1F8E9">
+<mat-toolbar color="#F1F8E9" style="border-bottom: 1px solid #ccc">
 	<button mat-icon-button *ngIf="authService.loggedIn() && authService.stationSelected() && !nursePermission()" aria-label="Toggle sidenav" (click)="drawer.toggle()"><mat-icon style="color: #568B3E;">menu</mat-icon></button>
-  	<span *ngIf="!authService.loggedIn()">Evelabs Care</span>
-    <button *ngIf="nursePermission()" mat-button>{{authService.getHospitalName()}}</button>
-<!--   	<span class="toolbar-spacer"></span>
- -->    
-    <span *ngIf="nursePermission() && authService.stationSelected()"> > </span>
-    <button *ngIf="nursePermission()" mat-button>{{authService.getStationName()}}</button>
+  	<!-- <span *ngIf="!authService.loggedIn()">Evelabs Care</span> -->
+    <span style="color: #d02539;font-size: 25px;padding-left: 16px;">Evelabs</span>
+    <span class="example-fill-remaining-space"></span>
+    <span *ngIf="nursePermission()" mat-button [fxShow.gt-sm]="true"  fxHide [fxHide.xs]="true" style="color:#757575;font-size: 16px;font-weight: 100;">{{authService.getHospitalName()}}</span>  
+    <span *ngIf="nursePermission() && authService.stationSelected()" [fxShow.gt-sm]="true" fxHide [fxHide.xs]="true" style="color:#757575;font-size: 16px;font-weight: 100;padding-left: 1em;padding-right: 1em;"> > </span>
+    <span *ngIf="nursePermission()" style="color:#757575;font-size: 16px;font-weight: 100;" class="station_name" mat-button>{{authService.getStationName()}}</span>
     <span class="toolbar-spacer"></span>
   	<button *ngIf="!authService.loggedIn()" mat-button routerLink="/login" routerLinkActive="toolbar-active">Login</button>
   	<button *ngIf="!authService.loggedIn()" mat-button routerLink="/register" routerLinkActive="toolbar-active">Register</button>
-  	<button *ngIf="authService.loggedIn()" mat-button [matMenuTriggerFor]="accountMenu" routerLinkActive="toolbar-active"><mat-icon>account_circle</mat-icon></button>
+  	<button *ngIf="authService.loggedIn()" mat-button [matMenuTriggerFor]="accountMenu" routerLinkActive="toolbar-active" class="menu_icon"><mat-icon >account_circle</mat-icon></button>
   	<mat-menu #accountMenu="matMenu">
   	  <button mat-menu-item disabled>
   	      <mat-icon>person_outline</mat-icon>
@@ -24,8 +24,8 @@
   	      <span>Logout</span>
   	    </button>
   	</mat-menu>
-
 </mat-toolbar>
+
 <mat-sidenav-container class="main-container" [hasBackdrop]="true">
 	<mat-sidenav #drawer mode="over" closed role="navigation">
     	<mat-nav-list  *ngFor="let item of authService.getMenu()" (click)="drawer.close()">
@@ -34,8 +34,19 @@
   	</mat-sidenav>
   	<mat-sidenav-content>
     	<router-outlet></router-outlet>
+      <footer  fxShow [fxShow.xs]=true fxHide [fxHide.gt-sm]="true"  *ngIf="nursePermission() && authService.stationSelected()" style="padding: 0;">
+        <mat-toolbar color="#F1F8E9" fxLayout="row" flexLayoutAlign="center center" style="padding: 0;">
+            <button mat-button fxFlex=50 style="align-items: center;text-align: center;padding: 0;height: 100%;width: 100%" routerLink="/nurse/home" routerLinkActive="active-list-item">
+                <mat-icon >visibility</mat-icon>
+            </button>
+            <button mat-button fxFlex=50 style="align-items: center;text-align: center;padding: 0;height: 100%;width: 100%" routerLink="nurse/patienthistory" routerLinkActive="active-list-item">
+                <mat-icon>history</mat-icon>
+            </button>
+        </mat-toolbar>
+      </footer>
   	</mat-sidenav-content>
 </mat-sidenav-container>
+
 
 
 

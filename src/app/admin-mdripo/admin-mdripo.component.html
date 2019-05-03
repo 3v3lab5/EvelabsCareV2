@@ -2,7 +2,7 @@
 	<div fxFlex="70" fxFlex.xs="40" class="scrollable">
 		<div fxLayout="column" fxLayoutGap="10px" >
 			<mat-card fxLayout="row" *ngFor="let dripo of dripos |filter:term">
-				<div fxFlex="50" fxFlex.xs="60">{{dripo.dripoId}} <br>{{dripo.stationName}}</div>
+				<div fxFlex="50" fxFlex.xs="60">{{dripo.dripoId}}  <b>{{dripo.altName}}</b> <br>{{dripo.stationName}}</div>
 				<div fxFlex="25" fxHide.xs="true" fxHide.sm="true" style="color: blue" (click)="openEditDialog(dripo)" class="mat-button">Edit</div>
 				<div fxFlex="20" fxHide.xs="false" fxHide.sm="false" fxHide.md="true" fxHide.lg="true" fxHide.xl="true" style="color: blue" (click)="openEditDialog(dripo)" class="mat-button">
 					<mat-icon>edit</mat-icon>
@@ -40,6 +40,13 @@
 					 	  		    <mat-icon matSuffix>speaker_phone</mat-icon>
 					 	  		    <mat-error *ngFor="let validation of validationMessages.dripoId">
 					 	  		    	<mat-error class="error-message" *ngIf="createDripoForm.get('dripoId').hasError(validation.type) && (createDripoForm.get('dripoId').dirty || createDripoForm.get('dripoId').touched)">{{validation.message}}</mat-error>
+					 	  		    </mat-error>
+					 	  		</mat-form-field>
+					 	  		<mat-form-field>
+					 	  		    <input matInput placeholder="Enter alternative name" type="text" formControlName=altName>
+					 	  		    <mat-icon matSuffix>info</mat-icon>
+					 	  		    <mat-error *ngFor="let validation of validationMessages.altName">
+					 	  		    	<mat-error class="error-message" *ngIf="createDripoForm.get('altName').hasError(validation.type) && (createDripoForm.get('altName').dirty || createDripoForm.get('altName').touched)">{{validation.message}}</mat-error>
 					 	  		    </mat-error>
 					 	  		</mat-form-field>
 					 		</div>

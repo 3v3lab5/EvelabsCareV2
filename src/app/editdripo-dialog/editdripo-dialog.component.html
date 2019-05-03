@@ -20,6 +20,13 @@
 			    	<mat-error class="error-message" *ngIf="editDripoForm.get('dripoId').hasError(validation.type) && (editDripoForm.get('dripoId').dirty || editDripoForm.get('dripoId').touched)">{{validation.message}}</mat-error>
 			    </mat-error>
 			</mat-form-field>
+			<mat-form-field>
+			    <input matInput placeholder="Enter dripo id" type="text" formControlName=altName>
+			    <mat-icon matSuffix>speaker_phone</mat-icon>
+			    <mat-error *ngFor="let validation of validationMessages.altName">
+			    	<mat-error class="error-message" *ngIf="editDripoForm.get('altName').hasError(validation.type) && (editDripoForm.get('altName').dirty || editDripoForm.get('altName').touched)">{{validation.message}}</mat-error>
+			    </mat-error>
+			</mat-form-field>
 		</div>
 		<button mat-raised-button color="accent"  type="reset" [mat-dialog-close]="true" style="margin-right: 20px;">cancel</button>
 		<button mat-raised-button color="primary" type="submit" [disabled]="!editDripoForm.valid">Submit</button>

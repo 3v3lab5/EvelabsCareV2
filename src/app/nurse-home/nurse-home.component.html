@@ -1,95 +1,104 @@
-<div fxLayout="row" style="height: 100%;width: 100%;">
-	<div fxFlex="50" fxLayout="column"  style="background-color: #E0E0E0;border-right:  #616161;padding:40px;">
-		<div fxFlex="20" style="color:#757575; padding: 20px 20px 0px 20px;font-size: 24px;">Ongoing Tasks</div>
-		<div fxFlex="80" style="overflow-y: scroll;">
-			<mat-grid-list [cols]="cols" rowHeight="260px" gutterSize="40px">
+<div fxLayout="row" class="main">
+	<div fxFlex="75" fxFlex.xs="100" fxLayout="column"  style="background-color: rgb(245,245,245);border-right:  #616161;padding:20px;">
+		<div fxFlex="100" style="overflow-y: scroll;">
+			<mat-grid-list [cols]="cols" (window:resize)="onResize($event)" rowHeight="260px" gutterSize="20px">
 			 	<mat-grid-tile
-			 	*ngFor="let task of activeTasks"
+			 	*ngFor="let dripo of dripos"
 			 	[colspan]="1"
-			 	[rowspan]="1" >
-			 		<mat-card fxLayout="column" style="height: 100%;width: 100%;padding: 0px;" matTooltip="Click to delete task">
-			 			<div fxFlex="30" fxLayout="row">
-			 				<div fxFlex="70" fxLayout="column">
-			 					<div fxFlex="60" style="color:#757575;padding: 20px 0px 0px 20px;font-size: 24px;">{{task._bed.bedName}}</div>
-			 					<div fxFlex="40" *ngIf="task.status=='ongoing'" style="color:#4CAF50;padding: 5px 0px 0px 20px;font-size: 15px;">{{task.infusionStatus}}</div>
-			 					<div fxFlex="40" *ngIf="task.status=='alerted'" style="color:#D50000;padding: 5px 0px 0px 20px;font-size: 15px;">{{task.infusionStatus}}</div>
+			 	[rowspan]="1">
+			 		<mat-card fxLayout="column" [ngClass]="[(dripo.monitor==true)?'online':'offline' ,(dripo.status=='alerted')?'alerted_card':'ongoing_card']" flexLayoutAlign="center center" style="height: 100%;width: 100%;box-shadow: none;padding: 0px;border: 1px solid rgb(230,230,230)">
+			 			<div fxFlex="20" *ngIf="dripo.monitor==true" style="text-align: center;padding-top:0.5em;font-size: 1.5em;" [ngClass]="(dripo.status=='alerted')?'alerted':'ongoing'">
+			 				<b>{{dripo.bedName}}</b>
+			 			</div>
+			 			<div fxFlex="20" *ngIf="dripo.monitor==false" style="text-align: center;padding:1em;font-size: 1.5em;color:#757575;">
+			 				<b>{{dripo.altName}}</b>
+			 			</div>
+			 			<mat-progress-bar *ngIf="dripo.status != 'alerted'"  mode="determinate" value=0></mat-progress-bar>
+			 			<mat-progress-bar color="warn" *ngIf="dripo.status == 'alerted'"   mode="determinate" value=0></mat-progress-bar>
+			 			<div fxFlex="80"  fxLayout="column" flexLayoutAlign="center center">
+			 				<div fxFlex="10" fxLayout="row">
+			 					<div fxFlex="80"></div>
+			 					<div fxFlex="20">
+			 						<mat-icon  *ngIf="dripo.deviceCharge < 20" class="rotate-90" svgIcon="battery_20" style="color: red"></mat-icon>
+			 						<mat-icon  *ngIf="dripo.deviceCharge >= 20 && dripo.deviceCharge<30" class="rotate-90" svgIcon="battery_20"></mat-icon>
+									<mat-icon  *ngIf="dripo.deviceCharge >= 30 && dripo.deviceCharge<40" class="rotate-90" svgIcon="battery_30"></mat-icon>
+									<mat-icon  *ngIf="dripo.deviceCharge >= 40 && dripo.deviceCharge<60" class="rotate-90" svgIcon="battery_50"></mat-icon>
+									<mat-icon  *ngIf="dripo.deviceCharge >= 60 && dripo.deviceCharge<80" class="rotate-90" svgIcon="battery_60"></mat-icon>
+									<mat-icon  *ngIf="dripo.deviceCharge >= 80 && dripo.deviceCharge<90" class="rotate-90" svgIcon="battery_80"></mat-icon>
+			 						<mat-icon  *ngIf="dripo.deviceCharge >= 90" class="rotate-90" svgIcon="battery_full"></mat-icon>
+			 					</div>
 			 				</div>
-			 				<div fxFlex="30" fxLayout="row">
-			 					<div fxFlex="50">
-			 						<mat-icon style="color:#757575;padding: 20px 0px 0px 20px;font-size: 24px;">battery_std</mat-icon>
-			 					</div>
-			 					<div fxFlex="50" style="color:#757575;padding: 20px 0px 0px 0px;font-size: 18px;">
-			 						{{task.deviceCharge}}%
-			 					</div>
-			 				</div>
-			 			</div>
-			 			<div fxFlex="10">
-			 				<mat-progress-bar *ngIf="task.status=='ongoing'" [value]="task.percentage"></mat-progress-bar>
-			 				<mat-progress-bar *ngIf="task.status=='alerted'" color=warn   [value]="task.percentage"></mat-progress-bar>
-			 			</div>
-			 			<div fxFlex="40">
-			 				<ngx-slick  class="carousel" #slickModal="slick-modal" [config]="slideConfig" style="height: 100%;width: 100%;">
-			 					<div ngxSlickItem class="slide" fxLayout="column">
-			 						<div fxFlex="90"  style="color:#757575;padding: 5px 0px 0px 20px;font-size: 40px;font-weight: 100;">{{task.infusedVolume}} / {{task._medication.medicineVolume}}<span style="font-size: 20px;">ml</span></div> 
-			 						<div fxFlex="10"  style="color:#757575;padding: 0px 0px 0px 25px;font-size: 14px;">Infused</div>
-			 					</div>
-			 					<div ngxSlickItem class="slide"  fxLayout="column">
-			 						<div fxFlex="90"  style="color:#757575;padding: 5px 0px 0px 20px;font-size: 40px;font-weight: 100;">{{task.timeRemaining /60 | number:'1.0-0'}} <span style="font-size: 20px;">Hrs</span> {{task.timeRemaining%60}}  <span style="font-size: 20px;">Mins</span></div>
-			 						<div fxFlex="10"  style="color:#757575;padding: 0px 0px 0px 25px;font-size: 14px;">Remaining</div>
-			 					</div>
-			 					<div ngxSlickItem class="slide" fxLayout="column">
-			 						<div fxFlex="90"  style="color:#757575;padding: 5px 0px 0px 20px;font-size: 40px;font-weight: 100;">{{task.rate}} / {{task._medication.medicineRate}}<span style="font-size: 20px;">ml/hr</span></div> 
-			 						<div fxFlex="10"  style="color:#757575;padding: 0px 0px 0px 25px;font-size: 14px;">Rate</div>
-			 					</div>
-			 				</ngx-slick>
-			 			</div>
-			 			<div fxFlex="20">
-			 				<button mat-button (click)="openTaskActivity(task)">Delete</button>
+			 				<div fxFlex="90"  fxLayout="column" flexLayoutAlign="center center">
+								<div fxFlex="35" *ngIf="dripo.monitor==true"  style="text-align: center;font-size: 3em;font-weight: 500;color:#757575;">
+									{{dripo.rate}} 
+								</div>
+								<div fxFlex="35" *ngIf="dripo.monitor==false"  style="text-align: center;font-size: 3em;font-weight: 500;color:#757575;">
+									_ _ _
+								</div>
+								<div fxFlex="15" style="text-align: center;font-size: 1em;color:#757575;">
+									<span>ml/hr</span>
+								</div>
+								<div fxFlex="30" fxLayout="column" style="text-align: center;font-size: 1em;color:#757575;">
+									<div fxFlex="40" *ngIf="dripo.monitor==true">{{dripo.infusedVolume}} ml infused</div>
+									<div fxFlex="40" *ngIf="dripo.monitor==false">_ _ _ ml</div>
+									<div fxFlex="60" style="margin-left: 2em;margin-right: 2em;">
+										<mat-progress-bar *ngIf="dripo.status !='alerted' && dripo.monitor==true"  style="height: 1.5em;"   mode="determinate" value={{dripo.percentage}}>
+										</mat-progress-bar>
+										<mat-progress-bar color="warn" *ngIf="dripo.status=='alerted' && dripo.monitor==true " style="height: 1.5em;"   mode="determinate" value={{dripo.percentage}}>
+										</mat-progress-bar>
+									</div>
+								</div>
+								<div fxFlex="20" *ngIf="dripo.monitor==true && (dripo.timeRemaining%60)>9 && dripo.status !='alerted'"  style="text-align: center;color:#757575;font-size: 1.5em;" [ngClass]="(dripo.percentage >95)?'blinking':'normal'">0{{dripo.timeRemaining /60 | round}}:{{dripo.timeRemaining%60}} 
+								</div>
+								<div fxFlex="20" *ngIf="dripo.monitor==true && (dripo.timeRemaining%60)<=9 && dripo.status !='alerted'"  style="text-align: center;color:#757575;font-size: 1.5em;" [ngClass]="(dripo.percentage >95)?'blinking':'normal'">0{{dripo.timeRemaining /60 | round}}:0{{dripo.timeRemaining%60}} 
+								</div>
+								<div fxFlex=20 *ngIf="dripo.monitor == true && dripo.status=='alerted'" style="text-align: center;">
+									<button style="width: 90%;" mat-stroked-button color="warn" (click)=acknowledge(dripo._id)>Acknowledge</button>
+								</div>
+								<div fxFlex="20" *ngIf="dripo.monitor==false"  style="text-align: center;color:#757575;font-size: 1.5em;">_ _ _
+								</div>
+							</div>
 			 			</div>
 					</mat-card>
 			 	</mat-grid-tile>
 			</mat-grid-list>	
 		</div>
 	</div>
-	<div fxFlex="25" fxLayout="column" style="border-left: solid thin #E0E0E0;">
-		<div fxFlex="25" fxLayout="column" style="border-bottom: solid thin #E0E0E0;">
-			<div fxFlex="50" style="color:#757575; padding: 20px;font-size: 24px;">Patients</div>
+
+
+	<div fxFlex="25" fxLayout="column" style="border-left: solid thin #E0E0E0;background-color: rgb(235,235,235);" [fxShow.gt-sm]="true"  fxHide [fxHide.xs]="true">
+		<div fxFlex="15" fxLayout="column" style="border-bottom: solid thin #E0E0E0;">
+			<div fxFlex="50" style="color:#757575; padding: 20px;font-size:2em;font-weight: 500;">Infusion History</div>
 			<div fxFlex="50" style="padding: 20px;padding-top: 5px;">
-	  			<button mat-stroked-button (click)="openAddPatientDialog()"><mat-icon style="color:#757575">add</mat-icon>ADD PATIENTS</button>
 			</div>
 		</div>
-		<div fxFlex="75" style="overflow-y: scroll;">
-			<div fxLayout="column" style="border-bottom: solid thin #E0E0E0;" *ngFor="let patient of patients">
-				<div style="padding: 20px;padding-bottom:0px;font-size: 24px;color:#616161;">{{patient.patientName}}</div>
-				<div fxLayout="row" style="padding-left:20px;color:#757575;">
-					<div fxFlex="50">Age : {{patient.patientAge}} </div>
-					<div fxFlex="50">Bed : {{patient.bedName}}</div>
-				</div>
-				<div style="padding-left:20px;color:#757575;">Admitted On : {{patient.admittedOn | date:'fullDate'}}</div>
-				<div style="padding: 10px;padding-top: 5px;">
-					<button style="padding: 0px;" mat-button [routerLink]="['/nurse/patienthistory',patient._id]" >History</button>
-					<button mat-button *ngIf="patient.patientStatus == 'active'"  (click)="openEditDialog(patient)">Edit</button>
-					<button mat-button *ngIf="patient.patientStatus == 'active'" (click)="openDischargeDialog(patient)">Discharge</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div fxFlex="25" fxLayout="column" style="border-left: solid thin #E0E0E0;">
-		<div fxFlex="25" fxLayout="column" style="border-bottom: solid thin #E0E0E0;">
-			<div fxFlex="50" style="color:#757575; padding: 20px;font-size: 24px;">Tasks</div>
-			<div fxFlex="50" style="padding: 20px;padding-top: 5px;">
-  				<button mat-stroked-button (click)="openAddDialog()"><mat-icon style="color:#757575">add</mat-icon>ADD TASKS</button>
-			</div>
-		</div>
-		<div fxFlex="75" style="overflow-y: scroll;">
-			<div fxLayout="column" style="border-bottom: solid thin #E0E0E0;" *ngFor="let upcomingTask of upcomingTasks">
-				<div style="padding: 20px;padding-bottom:0px;font-size: 24px;color:#616161;">{{upcomingTask._bed.bedName}}</div>
-				<div style="padding-left:20px;color:#757575;">{{upcomingTask._medication.medicineName}}</div>
-				<div style="padding-left:20px;color:#757575;">{{upcomingTask.timeIn12}}</div>
-				<div style="padding: 10px;padding-top: 5px;">
-					<button style="padding: 0px;" mat-button color="warn" (click)="openTaskActivity(upcomingTask)">Delete</button>
-				</div>
-			</div>
+		<div fxFlex="85" style="overflow-y: scroll;">
+			<mat-accordion *ngFor="let history of histories">
+			  <mat-expansion-panel style="margin: 0.3em;">
+			    <mat-expansion-panel-header>
+			      <mat-panel-title>
+			      	{{history.bedName}}
+			      </mat-panel-title>
+			      <mat-panel-description>
+			      	{{history.date}} &nbsp;&nbsp;&nbsp;&nbsp;<b>{{history.startingTime}}</b>
+			      </mat-panel-description>
+			    </mat-expansion-panel-header>
+			    <div fxLayout="column">
+			    	<div fxFlex="50" fxLayout="row">
+			    		<div fxFlex="50">Total Volume</div>
+			    		<div fxFlex="50">{{history.totalVolume}}</div>
+			    	</div>
+			    	<div fxFlex="50" fxLayout="row">
+			    		<div fxFlex="50">Infused Volume</div>
+			    		<div fxFlex="50">{{history.infusedVolume}}</div>
+			    	</div>
+			    	<div fxFlex="50" fxLayout="row">
+			    		<div fxFlex="50">Ending Time</div>
+			    		<div fxFlex="50">{{history.endingTime}}</div>
+			    	</div>
+			    </div>
+			  </mat-expansion-panel>
+			</mat-accordion>
 		</div>
 	</div>
 </div>

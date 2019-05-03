@@ -22,7 +22,8 @@ export class AdminMdripoComponent implements OnInit {
   	constructor(private fb: FormBuilder,private admin: AdminService,public snackbar: MatSnackBar,private dialog: MatDialog) { 
   		this.createDripoForm = this.fb.group({
   			stationId:['',Validators.required],
-  			dripoId:['',Validators.required]
+  			dripoId:['',Validators.required],
+        altName:['',Validators.required]
 
   		}) 
 
@@ -34,7 +35,10 @@ export class AdminMdripoComponent implements OnInit {
   		],
   		'dripoId':[
   			{type:'required',message:'dripo id is required'}
-  		]
+  		],
+      'altName':[
+        {type:'required',message:'Alternative name is required'}
+      ]
   	}
 
   	ngOnInit() {
@@ -89,6 +93,9 @@ export class AdminMdripoComponent implements OnInit {
   		            formDirective.resetForm();
   		            this.createDripoForm.reset();
   		        	}
+                else{
+                  this.snackbar.open(res.message, 'close')
+                }
   		        },
   		    err => {
   		          console.log(err);
@@ -107,6 +114,7 @@ export class AdminMdripoComponent implements OnInit {
   	                stationId: dripo.stationId,
   	                stationName: dripo.stationName,
   	                dripoId:dripo.dripoId,
+                    altName:dripo.altName,
   	                _id:dripo._id
   	            };
 
@@ -132,7 +140,7 @@ export class AdminMdripoComponent implements OnInit {
   	openDeleteDialog(dripo) {
   	    const dialogConfig = new MatDialogConfig();
   	    dialogConfig.autoFocus = true;
-  	    dialogConfig.height= '200px';
+  	    dialogConfig.height= '250px';
   	    dialogConfig.width='400px';
   	    dialogConfig.data = {
   	       stationName: dripo.stationName,

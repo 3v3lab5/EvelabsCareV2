@@ -133,7 +133,7 @@ const routes: Routes = [
 
 	},
 	{
-		path:'nurse/patienthistory/:id',
+		path:'nurse/patienthistory',
 		component:NursePhistoryComponent,
 		canActivate: [RoleGuardService], 
 		   	data: { 

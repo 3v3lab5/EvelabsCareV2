@@ -19,12 +19,14 @@ import {MatButtonModule,
         MatMenuModule,
         MatDialogModule,
         MatGridListModule,
+        MatDividerModule,
         MatSnackBarModule,
         MatBadgeModule,
         MatTableModule,
         MatExpansionModule,
         MatTooltipModule,
         MatProgressBarModule,
+        MatProgressSpinnerModule,
         MatSidenavModule} from '@angular/material';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
@@ -64,6 +66,7 @@ import { ActivateAccountComponent } from './activate-account/activate-account.co
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { AddpatientDialogComponent } from './addpatient-dialog/addpatient-dialog.component';
+import { RoundPipe } from './round.pipe';
 
 
 
@@ -101,6 +104,7 @@ import { AddpatientDialogComponent } from './addpatient-dialog/addpatient-dialog
     ForgotPasswordComponent,
     ResetPasswordComponent,
     AddpatientDialogComponent,
+    RoundPipe,
   ],
   imports: [
     BrowserModule,
@@ -122,10 +126,12 @@ import { AddpatientDialogComponent } from './addpatient-dialog/addpatient-dialog
     MatIconModule,
     MatSidenavModule,
     MatMenuModule,
+    MatDividerModule,
     MatSnackBarModule,
     MatDialogModule,
     MatGridListModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
     MatBadgeModule,
     MatTableModule,
     MatExpansionModule,
