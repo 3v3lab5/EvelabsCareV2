@@ -8,8 +8,8 @@ import * as io from 'socket.io-client';
 export class SocketService {
 	private socket: SocketIOClient.Socket;
   	constructor() {
-  		//this.socket = io('http://74.207.227.41:4000');
-      this.socket = io('http://localhost:4000');
+  		this.socket = io('http://74.207.227.41:4000');
+      //this.socket = io('http://localhost:4000');
 
   	}
 

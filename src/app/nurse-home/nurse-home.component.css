@@ -25,10 +25,10 @@ background: transparent;
 }
 
 .alerted{
-	color: red;
+	color: #f44336;
 }
 .ongoing{
-	color:green;
+	color:#689f38;
 }
 
 @-webkit-keyframes blinker {

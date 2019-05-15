@@ -29,17 +29,22 @@
 			 					</div>
 			 				</div>
 			 				<div fxFlex="90"  fxLayout="column" flexLayoutAlign="center center">
-								<div fxFlex="35" *ngIf="dripo.monitor==true"  style="text-align: center;font-size: 3em;font-weight: 500;color:#757575;">
+								<div fxFlex="30" *ngIf="dripo.monitor==true && dripo.rate!=0"  style="text-align: center;font-size: 3em;font-weight: 500;color:#757575;">
 									{{dripo.rate}} 
 								</div>
-								<div fxFlex="35" *ngIf="dripo.monitor==false"  style="text-align: center;font-size: 3em;font-weight: 500;color:#757575;">
+								<div fxFlex="30" *ngIf="dripo.monitor==true && dripo.rate==0"  style="text-align: center;font-size: 2em;font-weight: 500;padding-top:0.6em;color:#757575;">
+									No Flow
+								</div>
+								<div fxFlex="30" *ngIf="dripo.monitor==false"  style="text-align: center;font-size: 3em;font-weight: 500;color:#757575;">
 									_ _ _
 								</div>
-								<div fxFlex="15" style="text-align: center;font-size: 1em;color:#757575;">
+								<div fxFlex="15" *ngIf="dripo.rate!=0" style="text-align: center;font-size: 1.3em;color:#757575;">
 									<span>ml/hr</span>
 								</div>
+								<div fxFlex="15" *ngIf="dripo.rate==0" style="text-align: center;font-size: 1.3em;color:#757575;">
+								</div>
 								<div fxFlex="30" fxLayout="column" style="text-align: center;font-size: 1em;color:#757575;">
-									<div fxFlex="40" *ngIf="dripo.monitor==true">{{dripo.infusedVolume}} ml infused</div>
+									<div fxFlex="40" style="font-weight: 600;" *ngIf="dripo.monitor==true">{{dripo.infusedVolume}}<span style="font-weight: 300;"> ml infused</span></div>
 									<div fxFlex="40" *ngIf="dripo.monitor==false">_ _ _ ml</div>
 									<div fxFlex="60" style="margin-left: 2em;margin-right: 2em;">
 										<mat-progress-bar *ngIf="dripo.status !='alerted' && dripo.monitor==true"  style="height: 1.5em;"   mode="determinate" value={{dripo.percentage}}>
@@ -48,14 +53,14 @@
 										</mat-progress-bar>
 									</div>
 								</div>
-								<div fxFlex="20" *ngIf="dripo.monitor==true && (dripo.timeRemaining%60)>9 && dripo.status !='alerted'"  style="text-align: center;color:#757575;font-size: 1.5em;" [ngClass]="(dripo.percentage >95)?'blinking':'normal'">0{{dripo.timeRemaining /60 | round}}:{{dripo.timeRemaining%60}} 
+								<div fxFlex="25" *ngIf="dripo.monitor==true && (dripo.timeRemaining%60)>9 && dripo.status !='alerted'"  style="text-align: center;color:#757575;font-size: 1.5em;padding-top: 0.3em;" [ngClass]="(dripo.percentage >95)?'blinking':'normal'">0{{dripo.timeRemaining /60 | round}}:{{dripo.timeRemaining%60}} 
 								</div>
-								<div fxFlex="20" *ngIf="dripo.monitor==true && (dripo.timeRemaining%60)<=9 && dripo.status !='alerted'"  style="text-align: center;color:#757575;font-size: 1.5em;" [ngClass]="(dripo.percentage >95)?'blinking':'normal'">0{{dripo.timeRemaining /60 | round}}:0{{dripo.timeRemaining%60}} 
+								<div fxFlex="25" *ngIf="dripo.monitor==true && (dripo.timeRemaining%60)<=9 && dripo.status !='alerted'"  style="padding-top: 0.3em;text-align: center;color:#757575;font-size: 1.5em;" [ngClass]="(dripo.percentage >95)?'blinking':'normal'">0{{dripo.timeRemaining /60 | round}}:0{{dripo.timeRemaining%60}} 
 								</div>
-								<div fxFlex=20 *ngIf="dripo.monitor == true && dripo.status=='alerted'" style="text-align: center;">
-									<button style="width: 90%;" mat-stroked-button color="warn" (click)=acknowledge(dripo._id)>Acknowledge</button>
+								<div fxFlex=25 *ngIf="dripo.monitor == true && dripo.status=='alerted'" style="text-align: center;">
+									<button style="width: 90%;font-size: 1em;font-weight: 400;" mat-stroked-button color="warn" (click)=acknowledge(dripo._id)>Acknowledge</button>
 								</div>
-								<div fxFlex="20" *ngIf="dripo.monitor==false"  style="text-align: center;color:#757575;font-size: 1.5em;">_ _ _
+								<div fxFlex="25" *ngIf="dripo.monitor==false"  style="text-align: center;color:#757575;font-size: 1.5em;">_ _ _
 								</div>
 							</div>
 			 			</div>
@@ -67,20 +72,18 @@
 
 
 	<div fxFlex="25" fxLayout="column" style="border-left: solid thin #E0E0E0;background-color: rgb(235,235,235);" [fxShow.gt-sm]="true"  fxHide [fxHide.xs]="true">
-		<div fxFlex="15" fxLayout="column" style="border-bottom: solid thin #E0E0E0;">
-			<div fxFlex="50" style="color:#757575; padding: 20px;font-size:2em;font-weight: 500;">Infusion History</div>
-			<div fxFlex="50" style="padding: 20px;padding-top: 5px;">
-			</div>
+		<div fxFlex="15" fxLayout="column" flexLayoutAlign="center center" style="border-bottom: solid thin #E0E0E0;">
+			<div fxFlex="50" style="color:#757575;text-align: center; padding: 1em;font-size:2em;font-weight: 300;">Infusion History</div>
 		</div>
 		<div fxFlex="85" style="overflow-y: scroll;">
 			<mat-accordion *ngFor="let history of histories">
 			  <mat-expansion-panel style="margin: 0.3em;">
 			    <mat-expansion-panel-header>
-			      <mat-panel-title>
-			      	{{history.bedName}}
+			      <mat-panel-title style="font-weight: 500;color: #33691e;">
+			      	<b>{{history.bedName}}</b>
 			      </mat-panel-title>
 			      <mat-panel-description>
-			      	{{history.date}} &nbsp;&nbsp;&nbsp;&nbsp;<b>{{history.startingTime}}</b>
+			      	{{history.date}} &nbsp;&nbsp;&nbsp;&nbsp;{{history.startingTime}}
 			      </mat-panel-description>
 			    </mat-expansion-panel-header>
 			    <div fxLayout="column">
